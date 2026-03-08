@@ -9,6 +9,7 @@ import '../presentation/screens/explore/explore_screen.dart';
 import '../presentation/screens/explore/topic_detail_screen.dart';
 import '../presentation/screens/progress/progress_screen.dart';
 import '../presentation/screens/settings/settings_screen.dart';
+import '../presentation/screens/settings/notifications_screen.dart';
 import '../presentation/screens/profile/profile_screen.dart';
 import '../presentation/screens/quiz/quiz_shell.dart';
 
@@ -75,6 +76,10 @@ class AppRouter {
       GoRoute(
         path: '/profile',
         builder: (context, state) => const ProfileScreen(),
+      ),
+      GoRoute(
+        path: '/notifications',
+        builder: (context, state) => const NotificationsScreen(),
       ),
     ],
   );
