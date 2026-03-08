@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../providers/notification_provider.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -15,6 +16,7 @@ class SettingsScreen extends ConsumerWidget {
     final isDarkMode = themeMode == ThemeMode.dark;
     final language = ref.watch(languageProvider);
     final isTurkish = language == 'tr';
+    final isNotificationsEnabled = ref.watch(notificationProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Ayarlar')),
@@ -31,7 +33,15 @@ class SettingsScreen extends ConsumerWidget {
           _SettingsTile(
             icon: Icons.notifications_outlined,
             title: 'Bildirimler',
-            onTap: () {},
+            trailing: Switch(
+              value: isNotificationsEnabled,
+              onChanged: (_) {
+                ref.read(notificationProvider.notifier).toggleNotifications();
+              },
+            ),
+            onTap: () {
+              ref.read(notificationProvider.notifier).toggleNotifications();
+            },
           ),
           const _SectionHeader(title: 'Uygulama'),
           _SettingsTile(

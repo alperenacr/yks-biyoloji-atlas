@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/theme/app_theme.dart';
 import 'routes/app_router.dart';
+import 'core/services/notification_service.dart';
 
 final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
   throw UnimplementedError('Rootte override edilecek');
@@ -28,10 +29,14 @@ Future<void> main() async {
 
   final prefs = await SharedPreferences.getInstance();
 
+  final notificationService = NotificationService();
+  await notificationService.init();
+
   runApp(
     ProviderScope(
       overrides: [
         sharedPreferencesProvider.overrideWithValue(prefs),
+        notificationServiceProvider.overrideWithValue(notificationService),
       ],
       child: const YKSBiyolojiAtlasApp(),
     ),
