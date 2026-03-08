@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dart:io' show Platform, exit;
+import 'package:flutter/services.dart' show SystemNavigator;
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
 import '../../../core/theme/app_theme.dart';
@@ -75,14 +77,15 @@ class SettingsScreen extends ConsumerWidget {
               onPressed: () async {
                 try {
                   await Supabase.instance.client.auth.signOut();
-                  if (context.mounted) {
-                    context.go('/login');
-                  }
-                } catch (e) {
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Çıkış yapılamadı: $e')),
-                    );
+                } catch (_) {
+                  // Ignores signout failures (e.g., already logged out, no connection)
+                } finally {
+                  if (Platform.isAndroid) {
+                    SystemNavigator.pop();
+                  } else if (Platform.isIOS) {
+                    exit(0);
+                  } else {
+                    SystemNavigator.pop();
                   }
                 }
               },
