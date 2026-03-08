@@ -42,7 +42,9 @@ class AuthRepositoryImpl implements AuthRepository {
     return entity.User(
       id: user.id,
       email: user.email ?? '',
-      createdAt: DateTime.parse(user.createdAt),
+      displayName: user.userMetadata?['full_name'] as String?,
+      avatarUrl: user.userMetadata?['avatar_url'] as String?,
+      createdAt: DateTime.tryParse(user.createdAt) ?? DateTime.now(),
     );
   }
 
@@ -55,7 +57,9 @@ class AuthRepositoryImpl implements AuthRepository {
       return entity.User(
         id: user.id,
         email: user.email ?? '',
-        createdAt: DateTime.parse(user.createdAt),
+        displayName: user.userMetadata?['full_name'] as String?,
+        avatarUrl: user.userMetadata?['avatar_url'] as String?,
+        createdAt: DateTime.tryParse(user.createdAt) ?? DateTime.now(),
       );
     });
   }

@@ -16,7 +16,13 @@ class ProfileScreen extends ConsumerWidget {
       appBar: AppBar(title: const Text('Profil')),
       body: authState.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Bir hata oluştu: \$err')),
+        error: (err, stack) => SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Text(
+            'HATA DETAYI:\n$err\n\nSTACK TRACE:\n$stack',
+            style: const TextStyle(color: Colors.red, fontSize: 12),
+          ),
+        ),
         data: (user) {
           if (user == null) {
             return const Center(child: Text('Oturum açmadınız.'));
@@ -36,9 +42,10 @@ class ProfileScreen extends ConsumerWidget {
                   CircleAvatar(
                     radius: 60,
                     backgroundColor: AppColors.primary,
-                    backgroundImage:
-                        avatar != null ? NetworkImage(avatar) : null,
-                    child: avatar == null
+                    backgroundImage: (avatar != null && avatar.startsWith('http'))
+                        ? NetworkImage(avatar)
+                        : null,
+                    child: (avatar == null || !avatar.startsWith('http'))
                         ? const Icon(Icons.person,
                             size: 60, color: Colors.white)
                         : null,
@@ -99,7 +106,7 @@ class ProfileScreen extends ConsumerWidget {
                         style: TextStyle(color: context.textColorPrimary),
                       ),
                       subtitle: Text(
-                        '\${user.createdAt.day}/\${user.createdAt.month}/\${user.createdAt.year}',
+                        '${user.createdAt.day}/${user.createdAt.month}/${user.createdAt.year}',
                         style: TextStyle(color: context.textColorSecondary),
                       ),
                     ),

@@ -20,9 +20,15 @@ final supabaseDataSourceProvider = Provider<SupabaseDataSource?>((ref) {
 final authRepositoryProvider = Provider<AuthRepositoryImpl>((ref) {
   final client = ref.watch(supabaseClientProvider);
   final dataSource = ref.watch(supabaseDataSourceProvider);
+  
+  SupabaseClient? fallbackClient;
+  try {
+    fallbackClient = Supabase.instance.client;
+  } catch (_) {}
+
   return AuthRepositoryImpl(
-    dataSource ?? SupabaseDataSource(client ?? Supabase.instance.client),
-    client ?? Supabase.instance.client,
+    dataSource ?? (fallbackClient != null ? SupabaseDataSource(fallbackClient) : null),
+    client ?? fallbackClient,
   );
 });
 
