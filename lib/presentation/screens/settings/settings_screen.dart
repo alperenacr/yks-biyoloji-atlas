@@ -77,16 +77,16 @@ class SettingsScreen extends ConsumerWidget {
               onPressed: () async {
                 try {
                   await Supabase.instance.client.auth.signOut();
-                } catch (_) {
-                  // Ignores signout failures (e.g., already logged out, no connection)
-                } finally {
-                  if (Platform.isAndroid) {
-                    SystemNavigator.pop();
-                  } else if (Platform.isIOS) {
-                    exit(0);
-                  } else {
-                    SystemNavigator.pop();
+                } catch (_) {} 
+                
+                if (Platform.isIOS) {
+                  // Standard flutter pop does not work well on iOS to exit app. 
+                  // It's mostly prohibited by Apple guidelines to 'exit', so we navigate to login instead as a safe fallback.
+                  if (context.mounted) {
+                    context.go('/login');
                   }
+                } else {
+                  SystemNavigator.pop();
                 }
               },
               icon: const Icon(Icons.logout, color: AppColors.error),
