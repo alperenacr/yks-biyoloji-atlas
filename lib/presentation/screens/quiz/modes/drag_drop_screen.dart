@@ -191,7 +191,7 @@ class _DragDropScreenState extends ConsumerState<DragDropScreen> {
               timerWarning: _remaining < 30,
             ),
             const SizedBox(height: AppSpacing.sm),
-            _SectionHeader(
+            const _SectionHeader(
               icon: Icons.drag_indicator,
               title: 'Sürükle ve Bırak',
             ),
@@ -281,15 +281,17 @@ class _TopBar extends StatelessWidget {
                 Icon(
                   Icons.timer_outlined,
                   size: AppSpacing.iconSm,
-                  color: timerWarning ? AppColors.error : AppColors.textSecondary,
+                  color:
+                      timerWarning ? AppColors.error : AppColors.textSecondary,
                 ),
                 const SizedBox(width: AppSpacing.xs),
                 Text(
                   timerText,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    color:
-                        timerWarning ? AppColors.error : AppColors.textSecondary,
+                    color: timerWarning
+                        ? AppColors.error
+                        : AppColors.textSecondary,
                   ),
                 ),
               ],
@@ -383,9 +385,8 @@ class _DiagramArea extends ConsumerWidget {
                       child: DropZone(
                         zoneId: zone.id,
                         placedLabel: _labelTextFor(state.placements[zone.id]),
-                        isCorrect: state.isChecked
-                            ? state.results[zone.id]
-                            : null,
+                        isCorrect:
+                            state.isChecked ? state.results[zone.id] : null,
                         onAccept: (labelId) => ref
                             .read(dragDropProvider.notifier)
                             .placeLabel(zone.id, labelId),
@@ -425,8 +426,8 @@ class _LabelPool extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: const [
+          const Row(
+            children: [
               Icon(
                 Icons.grid_view_outlined,
                 size: AppSpacing.iconSm,

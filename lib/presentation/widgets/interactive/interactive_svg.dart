@@ -12,7 +12,8 @@ class InteractiveSvg extends StatelessWidget {
     return Container(
       color: AppColors.surfaceVariant,
       child: const Center(
-        child: Text('SVG Diyagram\n(flutter_svg ile render edilecek)', textAlign: TextAlign.center),
+        child: Text('SVG Diyagram\n(flutter_svg ile render edilecek)',
+            textAlign: TextAlign.center),
       ),
     );
   }

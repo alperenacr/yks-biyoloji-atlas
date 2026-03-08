@@ -1,41 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
+import '../../../core/theme/app_theme.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeProvider);
+    final isDarkMode = themeMode == ThemeMode.dark;
+    final language = ref.watch(languageProvider);
+    final isTurkish = language == 'tr';
+
     return Scaffold(
       appBar: AppBar(title: const Text('Ayarlar')),
       body: ListView(
         children: [
-          _SectionHeader(title: 'Hesap'),
+          const _SectionHeader(title: 'Hesap'),
           _SettingsTile(
             icon: Icons.person_outline,
             title: 'Profil',
-            onTap: () {},
+            onTap: () {
+              context.push('/profile');
+            },
           ),
           _SettingsTile(
             icon: Icons.notifications_outlined,
             title: 'Bildirimler',
             onTap: () {},
           ),
-          _SectionHeader(title: 'Uygulama'),
+          const _SectionHeader(title: 'Uygulama'),
           _SettingsTile(
             icon: Icons.dark_mode_outlined,
             title: 'Karanlık Mod',
-            trailing: Switch(value: false, onChanged: (_) {}),
-            onTap: () {},
+            trailing: Switch(
+              value: isDarkMode,
+              onChanged: (_) {
+                ref.read(themeProvider.notifier).toggleTheme();
+              },
+            ),
+            onTap: () {
+              ref.read(themeProvider.notifier).toggleTheme();
+            },
           ),
           _SettingsTile(
             icon: Icons.language_outlined,
             title: 'Dil',
-            subtitle: 'Türkçe',
-            onTap: () {},
+            subtitle: isTurkish ? 'Türkçe' : 'English',
+            onTap: () {
+              final newLang = isTurkish ? 'en' : 'tr';
+              ref.read(languageProvider.notifier).setLanguage(newLang);
+            },
           ),
-          _SectionHeader(title: 'Hakkında'),
+          const _SectionHeader(title: 'Hakkında'),
           _SettingsTile(
             icon: Icons.info_outline,
             title: 'Uygulama Hakkında',
@@ -50,8 +71,19 @@ class SettingsScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
             child: OutlinedButton.icon(
-              onPressed: () {
-                // TODO: Implement logout
+              onPressed: () async {
+                try {
+                  await Supabase.instance.client.auth.signOut();
+                  if (context.mounted) {
+                    context.go('/login');
+                  }
+                } catch (e) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Çıkış yapılamadı: $e')),
+                    );
+                  }
+                }
               },
               icon: const Icon(Icons.logout, color: AppColors.error),
               label: const Text(

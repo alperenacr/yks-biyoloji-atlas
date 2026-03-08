@@ -4,18 +4,25 @@ import '../../domain/entities/user.dart' as entity;
 import '../../data/datasources/remote/supabase_datasource.dart';
 import '../../data/repositories/auth_repository_impl.dart';
 
-final supabaseClientProvider = Provider<SupabaseClient>((ref) {
-  return Supabase.instance.client;
+final supabaseClientProvider = Provider<SupabaseClient?>((ref) {
+  try {
+    return Supabase.instance.client;
+  } catch (e) {
+    return null;
+  }
 });
 
-final supabaseDataSourceProvider = Provider<SupabaseDataSource>((ref) {
-  return SupabaseDataSource(ref.watch(supabaseClientProvider));
+final supabaseDataSourceProvider = Provider<SupabaseDataSource?>((ref) {
+  final client = ref.watch(supabaseClientProvider);
+  return client != null ? SupabaseDataSource(client) : null;
 });
 
 final authRepositoryProvider = Provider<AuthRepositoryImpl>((ref) {
+  final client = ref.watch(supabaseClientProvider);
+  final dataSource = ref.watch(supabaseDataSourceProvider);
   return AuthRepositoryImpl(
-    ref.watch(supabaseDataSourceProvider),
-    ref.watch(supabaseClientProvider),
+    dataSource ?? SupabaseDataSource(client ?? Supabase.instance.client),
+    client ?? Supabase.instance.client,
   );
 });
 

@@ -37,7 +37,7 @@ class _TopicCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
         border: Border.all(color: AppColors.border),
       ),
@@ -59,34 +59,33 @@ class _TopicCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           Text(
             topic['title'] as String,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: context.textColorPrimary,
             ),
           ),
           const SizedBox(height: AppSpacing.xs),
           Text(
             topic['grade'] as String,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 13,
-              color: AppColors.textSecondary,
+              color: context.textColorSecondary,
             ),
           ),
           const Spacer(),
           LinearProgressIndicator(
             value: topic['progress'] as double,
-            backgroundColor: AppColors.surfaceVariant,
-            valueColor:
-                const AlwaysStoppedAnimation<Color>(AppColors.primary),
+            backgroundColor: context.surfaceVariantColor,
+            valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
             borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
           ),
           const SizedBox(height: AppSpacing.xs),
           Text(
             '%${((topic['progress'] as double) * 100).round()} tamamlandı',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 12,
-              color: AppColors.textSecondary,
+              color: context.textColorSecondary,
             ),
           ),
         ],

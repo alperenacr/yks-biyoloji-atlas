@@ -42,3 +42,13 @@ class AppColors {
   static const dropZoneActive = Color(0x1A2E7D32);
   static const dropZoneHover = Color(0x332E7D32);
 }
+
+extension ThemeColors on BuildContext {
+  bool get isDark => Theme.of(this).brightness == Brightness.dark;
+  Color get surfaceColor => isDark ? Colors.black : AppColors.surface;
+  Color get textColorPrimary => isDark ? Colors.white : AppColors.textPrimary;
+  Color get textColorSecondary =>
+      isDark ? Colors.white70 : AppColors.textSecondary;
+  Color get surfaceVariantColor =>
+      isDark ? const Color(0xFF2C2C2C) : AppColors.surfaceVariant;
+}

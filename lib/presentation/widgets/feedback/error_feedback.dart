@@ -22,8 +22,8 @@ class ErrorFeedback extends StatelessWidget {
           const Icon(Icons.error_outline, color: AppColors.error),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
-            child: Text(message,
-                style: const TextStyle(color: AppColors.error)),
+            child:
+                Text(message, style: const TextStyle(color: AppColors.error)),
           ),
           if (onRetry != null)
             TextButton(onPressed: onRetry, child: const Text('Tekrar')),

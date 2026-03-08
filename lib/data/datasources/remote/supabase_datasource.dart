@@ -1,4 +1,4 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide AuthException;
 import '../../models/user_model.dart';
 import '../../models/topic_model.dart';
 import '../../models/progress_model.dart';
@@ -25,8 +25,6 @@ class SupabaseDataSource {
         email: user.email ?? '',
         createdAt: DateTime.parse(user.createdAt),
       );
-    } on AuthException {
-      rethrow;
     } catch (e) {
       throw AuthException(e.toString());
     }
@@ -48,8 +46,6 @@ class SupabaseDataSource {
         email: user.email ?? '',
         createdAt: DateTime.parse(user.createdAt),
       );
-    } on AuthException {
-      rethrow;
     } catch (e) {
       throw AuthException(e.toString());
     }
@@ -74,10 +70,8 @@ class SupabaseDataSource {
 
   Future<List<ProgressModel>> getUserProgress(String userId) async {
     try {
-      final data = await _client
-          .from('progress')
-          .select()
-          .eq('user_id', userId);
+      final data =
+          await _client.from('progress').select().eq('user_id', userId);
       return data.map((json) => ProgressModel.fromJson(json)).toList();
     } catch (e) {
       throw ServerException(e.toString());

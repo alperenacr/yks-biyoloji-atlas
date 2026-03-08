@@ -14,33 +14,33 @@ class ProgressScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _StatCard(
+            const _StatCard(
               title: 'Tamamlanan Konular',
               value: '3',
               icon: Icons.check_circle_outline,
               color: AppColors.success,
             ),
             const SizedBox(height: AppSpacing.md),
-            _StatCard(
+            const _StatCard(
               title: 'Çözülen Sorular',
               value: '142',
               icon: Icons.quiz_outlined,
               color: AppColors.primary,
             ),
             const SizedBox(height: AppSpacing.md),
-            _StatCard(
+            const _StatCard(
               title: 'Çalışma Serisi',
               value: '7 Gün',
               icon: Icons.local_fire_department_outlined,
               color: AppColors.warning,
             ),
             const SizedBox(height: AppSpacing.lg),
-            const Text(
+            Text(
               'Konu Bazlı İlerleme',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+                color: context.textColorPrimary,
               ),
             ),
             const SizedBox(height: AppSpacing.md),
@@ -75,7 +75,7 @@ class _StatCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
         border: Border.all(color: AppColors.border),
       ),
@@ -96,17 +96,17 @@ class _StatCard extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
-                  color: AppColors.textSecondary,
+                  color: context.textColorSecondary,
                 ),
               ),
               Text(
                 value,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
+                  color: context.textColorPrimary,
                 ),
               ),
             ],
@@ -133,10 +133,10 @@ class _ProgressItem extends StatelessWidget {
           children: [
             Text(
               item['title'] as String,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
-                color: AppColors.textPrimary,
+                color: context.textColorPrimary,
               ),
             ),
             Text(
@@ -152,7 +152,7 @@ class _ProgressItem extends StatelessWidget {
         const SizedBox(height: AppSpacing.xs),
         LinearProgressIndicator(
           value: progress,
-          backgroundColor: AppColors.surfaceVariant,
+          backgroundColor: context.surfaceVariantColor,
           valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
           borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
         ),

@@ -32,8 +32,7 @@ class TopicDetailScreen extends StatelessWidget {
                     SizedBox(height: AppSpacing.sm),
                     Text(
                       'SVG Diyagram burada görünecek',
-                      style:
-                          TextStyle(fontSize: 14, color: AppColors.textHint),
+                      style: TextStyle(fontSize: 14, color: AppColors.textHint),
                     ),
                   ],
                 ),
@@ -55,8 +54,7 @@ class TopicDetailScreen extends StatelessWidget {
                 child: ListTile(
                   tileColor: AppColors.surface,
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(AppSpacing.radiusMd),
+                    borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
                     side: const BorderSide(color: AppColors.border),
                   ),
                   leading:

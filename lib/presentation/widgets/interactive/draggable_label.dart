@@ -70,7 +70,7 @@ class DraggableLabel extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          const Icon(
             Icons.drag_indicator,
             size: AppSpacing.iconSm,
             color: AppColors.textHint,
@@ -96,7 +96,7 @@ class DraggableLabel extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          const Icon(
             Icons.check,
             size: AppSpacing.iconSm,
             color: AppColors.success,

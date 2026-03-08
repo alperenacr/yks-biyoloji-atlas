@@ -15,20 +15,20 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header
-              const Text(
+              Text(
                 'Merhaba! 👋',
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
+                  color: context.textColorPrimary,
                 ),
               ),
               const SizedBox(height: AppSpacing.xs),
-              const Text(
+              Text(
                 'Bugün hangi konuyu keşfedelim?',
                 style: TextStyle(
                   fontSize: 16,
-                  color: AppColors.textSecondary,
+                  color: context.textColorSecondary,
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
@@ -78,16 +78,16 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: AppSpacing.lg),
 
               // Quick Access
-              const Text(
+              Text(
                 '🎯 Hızlı Erişim',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: context.textColorPrimary,
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
-              Row(
+              const Row(
                 children: [
                   Expanded(
                     child: _QuickAccessCard(
@@ -95,7 +95,7 @@ class HomeScreen extends StatelessWidget {
                       icon: Icons.school,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.md),
+                  SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: _QuickAccessCard(
                       title: 'AYT',
@@ -107,12 +107,12 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: AppSpacing.lg),
 
               // Continue Learning
-              const Text(
+              Text(
                 '🔥 Kaldığın Yerden Devam',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                  color: context.textColorPrimary,
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
@@ -140,7 +140,7 @@ class _QuickAccessCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
         border: Border.all(color: AppColors.border),
       ),
@@ -150,10 +150,10 @@ class _QuickAccessCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.sm),
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+              color: context.textColorPrimary,
             ),
           ),
         ],
@@ -178,7 +178,7 @@ class _ContinueLearningCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.surfaceColor,
         borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
         border: Border.all(color: AppColors.border),
       ),
@@ -200,33 +200,32 @@ class _ContinueLearningCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                    color: context.textColorPrimary,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   subtitle,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
-                    color: AppColors.textSecondary,
+                    color: context.textColorSecondary,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 LinearProgressIndicator(
                   value: progress,
-                  backgroundColor: AppColors.surfaceVariant,
+                  backgroundColor: context.surfaceVariantColor,
                   valueColor:
                       const AlwaysStoppedAnimation<Color>(AppColors.primary),
-                  borderRadius:
-                      BorderRadius.circular(AppSpacing.radiusFull),
+                  borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
                 ),
               ],
             ),
           ),
-          const Icon(Icons.chevron_right, color: AppColors.textSecondary),
+          Icon(Icons.chevron_right, color: context.textColorSecondary),
         ],
       ),
     );

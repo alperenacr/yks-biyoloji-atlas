@@ -91,7 +91,7 @@ class _DropZoneState extends State<DropZone> {
   }
 
   Widget _buildEmpty() {
-    return Text(
+    return const Text(
       'boş',
       style: TextStyle(
         color: AppColors.textHint,
@@ -146,9 +146,9 @@ class _DashedBorderPainter extends CustomPainter {
   const _DashedBorderPainter({
     required this.color,
     this.borderRadius = 8,
-    this.strokeWidth = 1.5,
+    this.strokeWidth = 2,
     this.dashWidth = 5,
-    this.dashSpace = 4,
+    this.dashSpace = 3,
   });
 
   @override

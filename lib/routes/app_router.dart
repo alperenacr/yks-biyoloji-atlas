@@ -9,6 +9,7 @@ import '../presentation/screens/explore/explore_screen.dart';
 import '../presentation/screens/explore/topic_detail_screen.dart';
 import '../presentation/screens/progress/progress_screen.dart';
 import '../presentation/screens/settings/settings_screen.dart';
+import '../presentation/screens/profile/profile_screen.dart';
 import '../presentation/screens/quiz/quiz_shell.dart';
 
 class AppRouter {
@@ -19,7 +20,7 @@ class AppRouter {
 
   static final router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/splash',
+    initialLocation: '/home',
     routes: [
       GoRoute(
         path: '/splash',
@@ -70,6 +71,10 @@ class AppRouter {
             builder: (context, state) => const SettingsScreen(),
           ),
         ],
+      ),
+      GoRoute(
+        path: '/profile',
+        builder: (context, state) => const ProfileScreen(),
       ),
     ],
   );

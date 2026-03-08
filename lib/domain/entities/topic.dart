@@ -1,3 +1,5 @@
+import 'region.dart';
+
 class Topic {
   final String id;
   final String title;

@@ -22,8 +22,8 @@ class SuccessFeedback extends StatelessWidget {
           const Icon(Icons.check_circle, color: AppColors.success),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
-            child: Text(message,
-                style: const TextStyle(color: AppColors.success)),
+            child:
+                Text(message, style: const TextStyle(color: AppColors.success)),
           ),
           if (onContinue != null)
             TextButton(onPressed: onContinue, child: const Text('Devam')),
