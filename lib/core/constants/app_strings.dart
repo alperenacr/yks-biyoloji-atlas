@@ -1,26 +1,133 @@
 class AppStrings {
   AppStrings._();
 
-  static const appName = 'YKS Biyoloji Atlası';
-  static const appTagline = 'Ezberleme, Dokun ve Keşfet!';
+  static String get(String lang, String key) {
+    if (lang == 'tr') return _tr[key] ?? key;
+    return _en[key] ?? _tr[key] ?? key;
+  }
 
-  // Auth
-  static const login = 'Giriş Yap';
-  static const register = 'Kayıt Ol';
-  static const email = 'E-posta';
-  static const password = 'Şifre';
-  static const forgotPassword = 'Şifremi Unuttum';
+  static String replace(String text, Map<String, String> params) {
+    params.forEach((key, value) {
+      text = text.replaceAll('{$key}', value);
+    });
+    return text;
+  }
 
-  // Navigation
-  static const home = 'Ana Sayfa';
-  static const explore = 'Keşfet';
-  static const progress = 'İlerleme';
-  static const settings = 'Ayarlar';
+  // --- Türkçe ---
+  static const Map<String, String> _tr = {
+    'appName': 'YKS Biyoloji Atlası',
+    'appTagline': 'Ezberleme, Dokun ve Keşfet!',
+    'login': 'Giriş Yap',
+    'register': 'Kayıt Ol',
+    'email': 'E-posta',
+    'password': 'Şifre',
+    'forgotPassword': 'Şifremi Unuttum',
+    'home': 'Ana Sayfa',
+    'explore': 'Keşfet',
+    'progress': 'İlerleme',
+    'settings': 'Ayarlar',
+    'account': 'Hesap',
+    'app': 'Uygulama',
+    'about': 'Hakkında',
+    'profile': 'Profil',
+    'topics': 'Konular',
+    'notifications': 'Bildirimler',
+    'darkMode': 'Karanlık Mod',
+    'language': 'Dil',
+    'aboutApp': 'Uygulama Hakkında',
+    'privacyPolicy': 'Gizlilik Politikası',
+    'logout': 'Çıkış Yap',
+    'workingReminders': 'Çalışma Hatırlatıcısı',
+    'workingRemindersSub': 'Her gün aynı saatte Bioloji Atlası çalışmanız gerektiğini hatırlatan günlük bildirimler gönderilir.',
+    'hello': 'Merhaba! 👋',
+    'todayTopic': 'Bugün hangi konuyu keşfedelim?',
+    'dailyProgress': '📈 Günlük İlerleme',
+    'questionsCompleted': '{count}/{total} soru tamamlandı',
+    'quickAccess': '🎯 Hızlı Erişim',
+    'continueLearning': '🔥 Kaldığın Yerden Devam',
+    'completed': 'tamamlandı',
+    'studyCategory': 'Sınıf',
+    'streakKorunuyor': 'Serini koru!',
+    'completedTopics': 'Tamamlanan Konular',
+    'solvedQuestions': 'Çözülen Sorular',
+    'studyStreak': 'Çalışma Serisi',
+    'days': 'Gün',
+    'topicBasedProgress': 'Konu Bazlı İlerleme',
+    'unauthorized': 'Oturum açmadınız.',
+    'anonymousUser': 'İsimsiz Kullanıcı',
+    'accountInfo': 'Hesap Bilgileri',
+    'joinDate': 'Kayıt Tarihi',
+    'welcomeBack': 'Tekrar Hoşgeldin!',
+    'loginSubtitle': 'Hesabına giriş yap',
+    'noAccount': 'Hesabın yok mu?',
+    'createAccount': 'Hesap Oluştur',
+    'getStarted': 'Hemen Başla!',
+    'fullName': 'Ad Soyad',
+    'alreadyHaveAccount': 'Zaten hesabın var mı?',
+    'topic_hucre': 'Hücre',
+    'topic_hucre_zari': 'Hücre Zarı',
+    'topic_mitoz': 'Mitoz',
+    'topic_mayoz': 'Mayoz',
+    'topic_sindirim': 'Sindirim',
+    'topic_dolasim': 'Dolaşım',
+  };
 
-  // Quiz modes
-  static const exploreLearn = 'Keşfet ve Öğren';
-  static const pinpoint = 'Nokta Atışı';
-  static const glowIdentify = 'Parlayanı Bil';
-  static const dragDrop = 'Sürükle Bırak';
-  static const flowComplete = 'Akış Tamamlama';
+  // --- English ---
+  static const Map<String, String> _en = {
+    'appName': 'YKS Biology Atlas',
+    'appTagline': 'Don\'t Memorize, Touch and Explore!',
+    'login': 'Login',
+    'register': 'Register',
+    'email': 'E-mail',
+    'password': 'Password',
+    'forgotPassword': 'Forgot Password',
+    'home': 'Home',
+    'explore': 'Explore',
+    'progress': 'Progress',
+    'settings': 'Settings',
+    'account': 'Account',
+    'app': 'App',
+    'about': 'About',
+    'profile': 'Profile',
+    'topics': 'Topics',
+    'notifications': 'Notifications',
+    'darkMode': 'Dark Mode',
+    'language': 'Language',
+    'aboutApp': 'About App',
+    'privacyPolicy': 'Privacy Policy',
+    'logout': 'Logout',
+    'workingReminders': 'Study Reminder',
+    'workingRemindersSub': 'Daily notifications sent at the same time every day to remind you to study Biology Atlas.',
+    'hello': 'Hello! 👋',
+    'todayTopic': 'What shall we explore today?',
+    'dailyProgress': '📈 Daily Progress',
+    'questionsCompleted': '{count}/{total} questions completed',
+    'quickAccess': '🎯 Quick Access',
+    'continueLearning': '🔥 Continue Learning',
+    'completed': 'completed',
+    'studyCategory': 'Grade',
+    'streakKorunuyor': 'Keep your streak!',
+    'completedTopics': 'Completed Topics',
+    'solvedQuestions': 'Solved Questions',
+    'studyStreak': 'Study Streak',
+    'days': 'Days',
+    'topicBasedProgress': 'Topic Based Progress',
+    'unauthorized': 'You are not logged in.',
+    'anonymousUser': 'Anonymous User',
+    'accountInfo': 'Account Information',
+    'joinDate': 'Registration Date',
+    'welcomeBack': 'Welcome Back!',
+    'loginSubtitle': 'Login to your account',
+    'noAccount': 'Don\'t have an account?',
+    'createAccount': 'Create Account',
+    'getStarted': 'Get Started!',
+    'fullName': 'Full Name',
+    'alreadyHaveAccount': 'Already have an account?',
+    'topic_hucre': 'Cell',
+    'topic_hucre_zari': 'Cell Membrane',
+    'topic_mitoz': 'Mitosis',
+    'topic_mayoz': 'Meiosis',
+    'topic_sindirim': 'Digestion',
+    'topic_dolasim': 'Circulation',
+  };
 }

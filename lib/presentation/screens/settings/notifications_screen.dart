@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../providers/notification_provider.dart';
+import '../../../core/theme/app_theme.dart';
 
 class NotificationsScreen extends ConsumerWidget {
   const NotificationsScreen({super.key});
@@ -10,10 +12,11 @@ class NotificationsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isNotificationsEnabled = ref.watch(notificationProvider);
+    final language = ref.watch(languageProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bildirimler'),
+        title: Text(AppStrings.get(language, 'notifications')),
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
@@ -21,12 +24,12 @@ class NotificationsScreen extends ConsumerWidget {
           SwitchListTile(
             activeTrackColor: AppColors.primary.withValues(alpha: 0.5),
             activeThumbColor: AppColors.primary,
-            title: const Text(
-              'Çalışma Hatırlatıcıları (Streak)',
-              style: TextStyle(fontWeight: FontWeight.w600),
+            title: Text(
+              AppStrings.get(language, 'workingReminders'),
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
-            subtitle: const Text(
-              'Her gün aynı saatte Bioloji Atlası çalışmanız gerektiğini hatırlatan günlük bildirimler gönderilir.',
+            subtitle: Text(
+              AppStrings.get(language, 'workingRemindersSub'),
             ),
             value: isNotificationsEnabled,
             onChanged: (bool value) {

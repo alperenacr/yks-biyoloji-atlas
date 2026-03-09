@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:io' show Platform, exit;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart' show SystemNavigator;
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_theme.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -18,28 +20,28 @@ class SettingsScreen extends ConsumerWidget {
     final language = ref.watch(languageProvider);
     final isTurkish = language == 'tr';
     return Scaffold(
-      appBar: AppBar(title: const Text('Ayarlar')),
+      appBar: AppBar(title: Text(AppStrings.get(language, 'settings'))),
       body: ListView(
         children: [
-          const _SectionHeader(title: 'Hesap'),
+          _SectionHeader(title: AppStrings.get(language, 'account')),
           _SettingsTile(
             icon: Icons.person_outline,
-            title: 'Profil',
+            title: AppStrings.get(language, 'profile'),
             onTap: () {
               context.push('/profile');
             },
           ),
           _SettingsTile(
             icon: Icons.notifications_outlined,
-            title: 'Bildirimler',
+            title: AppStrings.get(language, 'notifications'),
             onTap: () {
               context.push('/notifications');
             },
           ),
-          const _SectionHeader(title: 'Uygulama'),
+          _SectionHeader(title: AppStrings.get(language, 'app')),
           _SettingsTile(
             icon: Icons.dark_mode_outlined,
-            title: 'Karanlık Mod',
+            title: AppStrings.get(language, 'darkMode'),
             trailing: Switch(
               value: isDarkMode,
               onChanged: (_) {
@@ -52,22 +54,22 @@ class SettingsScreen extends ConsumerWidget {
           ),
           _SettingsTile(
             icon: Icons.language_outlined,
-            title: 'Dil',
+            title: AppStrings.get(language, 'language'),
             subtitle: isTurkish ? 'Türkçe' : 'English',
             onTap: () {
               final newLang = isTurkish ? 'en' : 'tr';
               ref.read(languageProvider.notifier).setLanguage(newLang);
             },
           ),
-          const _SectionHeader(title: 'Hakkında'),
+          _SectionHeader(title: AppStrings.get(language, 'about')),
           _SettingsTile(
             icon: Icons.info_outline,
-            title: 'Uygulama Hakkında',
+            title: AppStrings.get(language, 'aboutApp'),
             onTap: () {},
           ),
           _SettingsTile(
             icon: Icons.privacy_tip_outlined,
-            title: 'Gizlilik Politikası',
+            title: AppStrings.get(language, 'privacyPolicy'),
             onTap: () {},
           ),
           const SizedBox(height: AppSpacing.lg),
@@ -79,9 +81,14 @@ class SettingsScreen extends ConsumerWidget {
                   await Supabase.instance.client.auth.signOut();
                 } catch (_) {} 
                 
+                if (kIsWeb) {
+                  if (context.mounted) {
+                    context.go('/login');
+                  }
+                  return;
+                }
+
                 if (Platform.isIOS) {
-                  // Standard flutter pop does not work well on iOS to exit app. 
-                  // It's mostly prohibited by Apple guidelines to 'exit', so we navigate to login instead as a safe fallback.
                   if (context.mounted) {
                     context.go('/login');
                   }
@@ -90,9 +97,9 @@ class SettingsScreen extends ConsumerWidget {
                 }
               },
               icon: const Icon(Icons.logout, color: AppColors.error),
-              label: const Text(
-                'Çıkış Yap',
-                style: TextStyle(color: AppColors.error),
+              label: Text(
+                AppStrings.get(language, 'logout'),
+                style: const TextStyle(color: AppColors.error),
               ),
               style: OutlinedButton.styleFrom(
                 side: const BorderSide(color: AppColors.error),
