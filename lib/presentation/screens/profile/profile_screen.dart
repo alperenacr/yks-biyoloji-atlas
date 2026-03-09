@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../providers/auth_provider.dart';
+import '../../../core/theme/app_theme.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -11,9 +13,10 @@ class ProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Listen to authentication state changes directly
     final authState = ref.watch(authStateProvider);
+    final language = ref.watch(languageProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Profil')),
+      appBar: AppBar(title: Text(AppStrings.get(language, 'profile'))),
       body: authState.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => SingleChildScrollView(
@@ -25,11 +28,11 @@ class ProfileScreen extends ConsumerWidget {
         ),
         data: (user) {
           if (user == null) {
-            return const Center(child: Text('Oturum açmadınız.'));
+            return Center(child: Text(AppStrings.get(language, 'unauthorized')));
           }
 
           final email = user.email;
-          final name = user.displayName ?? 'İsimsiz Kullanıcı';
+          final name = user.displayName ?? AppStrings.get(language, 'anonymousUser');
           final avatar = user.avatarUrl;
 
           return Center(
@@ -59,11 +62,11 @@ class ProfileScreen extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: AppSpacing.xl),
-                  const Align(
+                  Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Hesap Bilgileri',
-                      style: TextStyle(
+                      AppStrings.get(language, 'accountInfo'),
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -81,7 +84,7 @@ class ProfileScreen extends ConsumerWidget {
                       leading: const Icon(Icons.email_outlined,
                           color: AppColors.primary),
                       title: Text(
-                        'E-posta',
+                        AppStrings.get(language, 'email'),
                         style: TextStyle(color: context.textColorPrimary),
                       ),
                       subtitle: Text(
@@ -102,7 +105,7 @@ class ProfileScreen extends ConsumerWidget {
                       leading: const Icon(Icons.calendar_today_outlined,
                           color: AppColors.primary),
                       title: Text(
-                        'Kayıt Tarihi',
+                        AppStrings.get(language, 'joinDate'),
                         style: TextStyle(color: context.textColorPrimary),
                       ),
                       subtitle: Text(

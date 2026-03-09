@@ -1,42 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
+import '../../../core/constants/app_strings.dart';
+import '../../../core/theme/app_theme.dart';
 
-class ProgressScreen extends StatelessWidget {
+class ProgressScreen extends ConsumerWidget {
   const ProgressScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final language = ref.watch(languageProvider);
     return Scaffold(
-      appBar: AppBar(title: const Text('İlerleme')),
+      appBar: AppBar(title: Text(AppStrings.get(language, 'progress'))),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const _StatCard(
-              title: 'Tamamlanan Konular',
+            _StatCard(
+              title: AppStrings.get(language, 'completedTopics'),
               value: '3',
               icon: Icons.check_circle_outline,
               color: AppColors.success,
             ),
             const SizedBox(height: AppSpacing.md),
-            const _StatCard(
-              title: 'Çözülen Sorular',
+            _StatCard(
+              title: AppStrings.get(language, 'solvedQuestions'),
               value: '142',
               icon: Icons.quiz_outlined,
               color: AppColors.primary,
             ),
             const SizedBox(height: AppSpacing.md),
-            const _StatCard(
-              title: 'Çalışma Serisi',
-              value: '7 Gün',
+            _StatCard(
+              title: AppStrings.get(language, 'studyStreak'),
+              value: '7 ${AppStrings.get(language, 'days')}',
               icon: Icons.local_fire_department_outlined,
               color: AppColors.warning,
             ),
             const SizedBox(height: AppSpacing.lg),
             Text(
-              'Konu Bazlı İlerleme',
+              AppStrings.get(language, 'topicBasedProgress'),
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -47,7 +51,7 @@ class ProgressScreen extends StatelessWidget {
             ..._progressItems.map(
               (item) => Padding(
                 padding: const EdgeInsets.only(bottom: AppSpacing.md),
-                child: _ProgressItem(item: item),
+                child: _ProgressItem(item: item, language: language),
               ),
             ),
           ],
@@ -119,8 +123,9 @@ class _StatCard extends StatelessWidget {
 
 class _ProgressItem extends StatelessWidget {
   final Map<String, dynamic> item;
+  final String language;
 
-  const _ProgressItem({required this.item});
+  const _ProgressItem({required this.item, required this.language});
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +137,7 @@ class _ProgressItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              item['title'] as String,
+              AppStrings.get(language, item['title'] as String),
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
@@ -162,9 +167,9 @@ class _ProgressItem extends StatelessWidget {
 }
 
 const _progressItems = [
-  {'title': 'Hücre', 'progress': 0.75},
-  {'title': 'Hücre Zarı', 'progress': 0.60},
-  {'title': 'Mitoz', 'progress': 0.30},
-  {'title': 'Mayoz', 'progress': 0.0},
-  {'title': 'Sindirim', 'progress': 0.0},
+  {'title': 'topic_hucre', 'progress': 0.75},
+  {'title': 'topic_hucre_zari', 'progress': 0.60},
+  {'title': 'topic_mitoz', 'progress': 0.30},
+  {'title': 'topic_mayoz', 'progress': 0.0},
+  {'title': 'topic_sindirim', 'progress': 0.0},
 ];

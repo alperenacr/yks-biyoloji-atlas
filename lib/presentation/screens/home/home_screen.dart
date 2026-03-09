@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
+import '../../../core/constants/app_strings.dart';
+import '../../../core/theme/app_theme.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final language = ref.watch(languageProvider);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -16,7 +20,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               // Header
               Text(
-                'Merhaba! 👋',
+                AppStrings.get(language, 'hello'),
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -25,7 +29,7 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Bugün hangi konuyu keşfedelim?',
+                AppStrings.get(language, 'todayTopic'),
                 style: TextStyle(
                   fontSize: 16,
                   color: context.textColorSecondary,
@@ -46,9 +50,9 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      '📈 Günlük İlerleme',
-                      style: TextStyle(
+                    Text(
+                      AppStrings.get(language, 'dailyProgress'),
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textOnDark,
@@ -65,9 +69,12 @@ class HomeScreen extends StatelessWidget {
                           BorderRadius.circular(AppSpacing.radiusFull),
                     ),
                     const SizedBox(height: AppSpacing.sm),
-                    const Text(
-                      '12/20 soru tamamlandı',
-                      style: TextStyle(
+                    Text(
+                      AppStrings.replace(
+                        AppStrings.get(language, 'questionsCompleted'),
+                        {'count': '12', 'total': '20'},
+                      ),
+                      style: const TextStyle(
                         fontSize: 14,
                         color: AppColors.textOnDark,
                       ),
@@ -79,7 +86,7 @@ class HomeScreen extends StatelessWidget {
 
               // Quick Access
               Text(
-                '🎯 Hızlı Erişim',
+                AppStrings.get(language, 'quickAccess'),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -108,7 +115,7 @@ class HomeScreen extends StatelessWidget {
 
               // Continue Learning
               Text(
-                '🔥 Kaldığın Yerden Devam',
+                AppStrings.get(language, 'continueLearning'),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -116,9 +123,9 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
-              const _ContinueLearningCard(
+              _ContinueLearningCard(
                 title: 'Hücre Zarı',
-                subtitle: '10. Sınıf • %60 tamamlandı',
+                subtitle: '10. ${AppStrings.get(language, 'studyCategory')} • %60 ${AppStrings.get(language, 'completed')}',
                 progress: 0.6,
               ),
             ],

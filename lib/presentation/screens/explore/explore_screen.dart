@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
+import '../../../core/constants/app_strings.dart';
+import '../../../core/theme/app_theme.dart';
 
-class ExploreScreen extends StatelessWidget {
+class ExploreScreen extends ConsumerWidget {
   const ExploreScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final language = ref.watch(languageProvider);
     return Scaffold(
-      appBar: AppBar(title: const Text('Konular')),
+      appBar: AppBar(title: Text(AppStrings.get(language, 'topics'))),
       body: GridView.builder(
         padding: const EdgeInsets.all(AppSpacing.md),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -20,7 +24,7 @@ class ExploreScreen extends StatelessWidget {
         itemCount: _sampleTopics.length,
         itemBuilder: (context, i) {
           final topic = _sampleTopics[i];
-          return _TopicCard(topic: topic);
+          return _TopicCard(topic: topic, language: language);
         },
       ),
     );
@@ -29,8 +33,9 @@ class ExploreScreen extends StatelessWidget {
 
 class _TopicCard extends StatelessWidget {
   final Map<String, dynamic> topic;
+  final String language;
 
-  const _TopicCard({required this.topic});
+  const _TopicCard({required this.topic, required this.language});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +63,7 @@ class _TopicCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           Text(
-            topic['title'] as String,
+            AppStrings.get(language, topic['title'] as String),
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -67,7 +72,7 @@ class _TopicCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xs),
           Text(
-            topic['grade'] as String,
+            '${topic['grade']} ${AppStrings.get(language, 'studyCategory')}',
             style: TextStyle(
               fontSize: 13,
               color: context.textColorSecondary,
@@ -82,7 +87,7 @@ class _TopicCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xs),
           Text(
-            '%${((topic['progress'] as double) * 100).round()} tamamlandı',
+            '${((topic['progress'] as double) * 100).round()}% ${AppStrings.get(language, 'completed')}',
             style: TextStyle(
               fontSize: 12,
               color: context.textColorSecondary,
@@ -96,38 +101,38 @@ class _TopicCard extends StatelessWidget {
 
 const _sampleTopics = [
   {
-    'title': 'Hücre',
-    'grade': '9. Sınıf',
+    'title': 'topic_hucre',
+    'grade': '9.',
     'icon': Icons.circle_outlined,
     'progress': 0.75,
   },
   {
-    'title': 'Hücre Zarı',
-    'grade': '10. Sınıf',
+    'title': 'topic_hucre_zari',
+    'grade': '10.',
     'icon': Icons.panorama_fish_eye,
     'progress': 0.60,
   },
   {
-    'title': 'Mitoz',
-    'grade': '10. Sınıf',
+    'title': 'topic_mitoz',
+    'grade': '10.',
     'icon': Icons.cell_tower,
     'progress': 0.30,
   },
   {
-    'title': 'Mayoz',
-    'grade': '11. Sınıf',
+    'title': 'topic_mayoz',
+    'grade': '11.',
     'icon': Icons.merge,
     'progress': 0.0,
   },
   {
-    'title': 'Sindirim',
-    'grade': '11. Sınıf',
+    'title': 'topic_sindirim',
+    'grade': '11.',
     'icon': Icons.restaurant,
     'progress': 0.0,
   },
   {
-    'title': 'Dolaşım',
-    'grade': '11. Sınıf',
+    'title': 'topic_dolasim',
+    'grade': '11.',
     'icon': Icons.favorite_outline,
     'progress': 0.0,
   },
