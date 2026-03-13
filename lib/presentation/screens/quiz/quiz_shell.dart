@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
 import 'modes/drag_drop_screen.dart';
+import 'modes/explore_learn_screen.dart';
 
 class QuizShell extends StatelessWidget {
   final String topicId;
@@ -15,6 +16,10 @@ class QuizShell extends StatelessWidget {
     // Diğer modlar (explore_learn, pinpoint vb.) kendi geliştirici tarafından eklenecek.
     if (mode == 'drag_drop') {
       return DragDropScreen(topicId: topicId);
+    }
+
+    if (mode == 'explore_learn') {
+      return ExploreLearnScreen();
     }
 
     return Scaffold(

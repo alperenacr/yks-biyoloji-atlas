@@ -1,3 +1,5 @@
+import 'package:yks_biyoloji_atlas/domain/entities/region.dart';
+
 class Topic {
   final String id;
   final String title;
